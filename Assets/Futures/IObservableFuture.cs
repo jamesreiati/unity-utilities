@@ -13,7 +13,7 @@ namespace Reiati.Utilities
         bool HasFulfilled { get; }
 
         /// <summary>
-        /// An event invoked when the value has been fulfilled.
+        /// An event invoked when the value has been fulfilled. Make invoke upon subscription.
         /// </summary>
         event FulfillmentHandler OnFulfilled;
     }

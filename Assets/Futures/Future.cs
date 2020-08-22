@@ -41,7 +41,7 @@ namespace Reiati.Utilities
                 var referencedTask = future;
                 // Set null first so that if Fulfill throws, at least we have removed the operation
                 future = null;
-                if (referencedTask.HasFulfilled)
+                if (!referencedTask.HasFulfilled)
                 {
                     referencedTask.Fulfill();
                     return true;

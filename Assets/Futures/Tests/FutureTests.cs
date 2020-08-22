@@ -100,5 +100,54 @@ namespace Reiati.Utilities.Tests
             // assert
             Assert.That(eventRaised, Is.True);
         }
+
+        [Test]
+        public void ClearAndFulfillIfUnfulfilled_WithUnfulfilled_Fulfills()
+        {
+            // arrange
+            bool eventRaised = false;
+            Future future = new Future();
+            future.OnFulfilled += () =>
+            {
+                eventRaised = true;
+            };
+
+            // act
+            var wasUpdated = Future.ClearAndFulfillIfUnfulfilled(ref future);
+
+            // assert
+            Assert.That(eventRaised, Is.True);
+            Assert.That(wasUpdated, Is.True);
+            Assert.That(future, Is.Null);
+        }
+
+        [Test]
+        public void ClearAndFulfillIfUnfulfilled_WithFulfilled_Clears()
+        {
+            // arrange
+            Future future = new Future();
+            future.Fulfill();
+
+            // act
+            var wasUpdated = Future.ClearAndFulfillIfUnfulfilled(ref future);
+
+            // assert
+            Assert.That(wasUpdated, Is.False);
+            Assert.That(future, Is.Null);
+        }
+
+        [Test]
+        public void ClearAndFulfillIfUnfulfilled_WithNull_Noops()
+        {
+            // arrange
+            Future future = null;
+
+            // act
+            var wasUpdated = Future.ClearAndFulfillIfUnfulfilled(ref future);
+
+            // assert
+            Assert.That(wasUpdated, Is.False);
+            Assert.That(future, Is.Null);
+        }
     }
 }
